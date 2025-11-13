@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using MSC.Identity.Models.Entities;
 using OpenIddict.Abstractions;
 
 namespace IdentityOAuth2
@@ -11,12 +12,14 @@ namespace IdentityOAuth2
         {
             var builder = WebApplication.CreateBuilder(args);
             // inject connection db
-            builder.Services.AddDbContext<IdentityDbContext>(options =>
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
                 options.UseOpenIddict();
             });
-
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
             var allowOrigins = builder.Configuration["IdentityServer:AllowOrigins"].Split(',');
             builder.Services.AddCors(o => o.AddPolicy("MSCPolicy", builder =>
             {
@@ -25,10 +28,6 @@ namespace IdentityOAuth2
                        .AllowAnyHeader()
                        .AllowCredentials();
             }));
-
-            builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-                        .AddEntityFrameworkStores<IdentityDbContext>()
-                        .AddDefaultTokenProviders();
             builder.Services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.Domain = null;
@@ -43,7 +42,7 @@ namespace IdentityOAuth2
                 .AddCore(options =>
                 {
                     options.UseEntityFrameworkCore()
-                           .UseDbContext<IdentityDbContext>();
+                           .UseDbContext<ApplicationDbContext>();
                 })
                 .AddServer(options =>
                 {
