@@ -50,7 +50,6 @@ public class UsersController : ControllerBase
         var user = await _userManager.FindByIdAsync(id);
         user.UserName = dto.UserName;
         user.Email = dto.Email;
-        user.EmailConfirmed = dto.EmailConfirmed;
         await _userManager.UpdateAsync(user);
 
         return Ok(new { message = "Application updated successfully." });
