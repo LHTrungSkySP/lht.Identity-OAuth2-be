@@ -1,10 +1,10 @@
 pipeline {
     agent any
     environment {
-        IMAGE_NAME = "testdocker_multi"
-        CONTAINER_NAME = "testdocker_multi"
-        PORT_HOST = "2000"
-        PORT_CONTAINER = "8080"
+        IMAGE_NAME = "identity_be"
+        CONTAINER_NAME = "identity-be"
+        PORT_HOST = "1000"
+        PORT_CONTAINER = "1000"
         REPO_URL = "https://github.com/LHTrungSkySP/TestDocker.git"
     }
     stages {
