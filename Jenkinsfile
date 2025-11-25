@@ -4,7 +4,7 @@ pipeline {
         IMAGE_NAME = "identity_be"
         CONTAINER_NAME = "identity-be"
         PORT_HOST = "1000"
-        PORT_CONTAINER = "1000"
+        PORT_CONTAINER = "8080"
         REPO_URL = "https://github.com/LHTrungSkySP/lht.Identity-OAuth2-be.git"
     }
     stages {
