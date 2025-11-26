@@ -24,6 +24,11 @@ pipeline {
                 }
             }
         }
+        stage('Migrate') {
+            steps {
+                sh "dotnet ef database update"
+            }
+        }
         stage('Build Image') {
             steps {
                 sh "docker build -t ${IMAGE_NAME}:latest ."
@@ -36,11 +41,6 @@ pipeline {
                     docker run -d --name ${CONTAINER_NAME} \
                     --network postgresql_internal_net -p ${PORT_HOST}:${PORT_CONTAINER} ${IMAGE_NAME}:latest
                 '''
-            }
-        }
-        stage('Migrate') {
-            steps {
-                sh "dotnet ef database update"
             }
         }
     }
