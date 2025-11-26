@@ -24,11 +24,6 @@ pipeline {
                 }
             }
         }
-        stage('Migrate') {
-            steps {
-                sh "dotnet ef database update"
-            }
-        }
         stage('Build Image') {
             steps {
                 sh "docker build -t ${IMAGE_NAME}:latest ."
