@@ -40,7 +40,7 @@ pipeline {
         }
         stage('Migrate') {
             steps {
-                sh "docker ef database update"
+                sh "dotnet ef database update"
             }
         }
     }
