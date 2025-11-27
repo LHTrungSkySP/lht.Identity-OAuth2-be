@@ -40,17 +40,17 @@ namespace MSC.Identity.Controllers
                 var ret = await _userManager.CreateAsync(alice, "Admin1!");
             }
 
-            var adminClient = await _openIddictApplicationManager.FindByClientIdAsync(_configuration["ApplicationClients:AdminClientId"]);
+            var adminClient = await _openIddictApplicationManager.FindByClientIdAsync(_configuration["ApplicationClients:AERPClientId"]);
             if (await _openIddictApplicationManager.FindByClientIdAsync("AERP") is null)
             {
                 await _openIddictApplicationManager.CreateAsync(new OpenIddictApplicationDescriptor
                 {
-                    ClientId = _configuration["ApplicationClients:AdminClientId"],
-                    ClientSecret = _configuration["ApplicationClients:AdminClientSecret"],
+                    ClientId = _configuration["ApplicationClients:AERPClientId"],
+                    ClientSecret = _configuration["ApplicationClients:AERPClientSecret"],
                     DisplayName = "AERP Client",
                     ClientType = ClientTypes.Confidential,
-                    RedirectUris = { new Uri($"{_configuration["ApplicationClients:AdminBEUrl"]}/swagger/oauth2-redirect.html"), new Uri($"{_configuration["ApplicationClients:AdminFEUrl"]}/oauth2-callback") },
-                    PostLogoutRedirectUris = { new Uri($"{_configuration["ApplicationClients:AdminFEUrl"]}/signout-callback-oidc") },
+                    RedirectUris = { new Uri($"{_configuration["ApplicationClients:AERPBEUrl"]}/swagger/oauth2-redirect.html"), new Uri($"{_configuration["ApplicationClients:AERPFEUrl"]}/oauth2-callback") },
+                    PostLogoutRedirectUris = { new Uri($"{_configuration["ApplicationClients:AERPFEUrl"]}/signout-callback-oidc") },
                     Permissions =
                     {
                         Permissions.Endpoints.Authorization,
